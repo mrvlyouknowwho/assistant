@@ -1,8 +1,8 @@
 import unittest
 import os
 import json
-from ..data.database import Database, DatabaseLoadError, DatabaseSaveError
-from ..config import DATABASE_PATH
+from data.database import Database, DatabaseLoadError, DatabaseSaveError
+from ...core.config import DATABASE_PATH
 
 
 class TestDatabase(unittest.TestCase):

@@ -1,9 +1,10 @@
 """ Отвечает за управление потоком действий ассистента """
 import time
 import random
+from .exceptions import DispatcherError 
 from processing.nlp.analyzer import analyze_query
 from processing.search import search_google, filter_links
-from utils import fix_errors, add_function
+from .utils import fix_errors, add_function
 from skills.basic import BasicSkills
 from skills.search import SearchSkills
 

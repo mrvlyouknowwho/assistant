@@ -1,6 +1,6 @@
 import logging
 
-from utils import get_answer_from_knowledge_base, update_knowledge_base
+from .utils import get_answer_from_knowledge_base, update_knowledge_base
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 messages = []

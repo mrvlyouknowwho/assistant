@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from ..processing.search import search_google, filter_links
+from ...processing.search import search_google, filter_links
 import requests
 
 

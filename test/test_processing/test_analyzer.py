@@ -1,5 +1,5 @@
 import unittest
-from ..processing.nlp.analyzer import analyze_query
+from ...processing.nlp.analyzer import analyze_query
 
 class TestAnalyzer(unittest.TestCase):
 
