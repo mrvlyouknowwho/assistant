@@ -1,37 +1,35 @@
-""" Основной файл запуска ассистента """
-import time
-import random
-import os
+import logging
 
-from assistant.data.database import Database
-from assistant.core.dispatcher import Dispatcher
-from assistant.utils import check_internet_connection
-from assistant.config import DATABASE_PATH
-from assistant.exceptions import InternetConnectionError
+from utils import get_answer_from_knowledge_base, update_knowledge_base
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+messages = []
 
 def main():
-    print("Дебаг: Запуск ассистента...")
-    try:
-        db = Database(DATABASE_PATH)
-        dispatcher = Dispatcher(db)
-    except Exception as e:
-        print(f"Ошибка инициализации: {e}")
-        return
-
-    if not check_internet_connection():
-        print ("Ассистент: Нет соединения с интернетом.")
-        return
-
     while True:
-       try:
-           dispatcher.process_query()
-       except Exception as e:
-           print (f"Ошибка при обработке запроса: {e}")
-           continue
+        try:
+            user_input = input("Вы: ")
+            if user_input.lower() == 'выход':
+                break
+            
+            messages.append({"role": "user", "content": user_input})
 
-    print("Дебаг: Ассистент завершил работу.")
+            # Сначала проверяем базу знаний
+            answer = get_answer_from_knowledge_base(user_input)
+            
+            # Запрашиваем у пользователя обновление базы знаний
+            update_result = update_knowledge_base(user_input, answer)
 
+            if update_result:
+                print("Ассистент:", update_result)
+            else:
+                print("Ассистент:", answer)
+
+            messages.append({"role": "assistant", "content": answer})
+
+
+        except Exception as e:
+            print(f"Произошла ошибка: {e}")
 
 if __name__ == "__main__":
     main()
